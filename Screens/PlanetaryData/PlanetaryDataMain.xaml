@@ -148,7 +148,9 @@
                                             <TextBlock Grid.Column="0"
                                                 Foreground="{StaticResource MenuDarkText}"
                                                 Text="{Binding FullName}" />
-                                            <controls:RarityControl Grid.Column="1" Rarity="{Binding Rarity}" />
+                                            <controls:RarityControl Grid.Column="1"
+                                                Margin="{StaticResource PanelItemCentering}"
+                                                Rarity="{Binding Rarity}" />
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>

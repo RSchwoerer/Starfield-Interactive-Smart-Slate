@@ -1,15 +1,23 @@
-<UserControl x:Class="Starfield_Interactive_Smart_Slate.Controls.RarityControl"
-             x:Name="parent"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:Starfield_Interactive_Smart_Slate.Models"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+<UserControl
+    x:Class="Starfield_Interactive_Smart_Slate.Controls.RarityControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Starfield_Interactive_Smart_Slate.Models"
+    x:Name="parent"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
-    <Grid DataContext="{Binding ElementName=parent}">
+    <Grid
+        Background="Transparent"
+        DataContext="{Binding ElementName=parent}"
+        ToolTipService.InitialShowDelay="0">
+        <Grid.ToolTip>
+            <TextBlock Text="{Binding Rarity}" />
+        </Grid.ToolTip>
+
         <ContentControl>
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
@@ -22,183 +30,193 @@
                     </Setter>
 
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Rarity}"
-                                     Value="{x:Static models:Rarity.Uncommon}">
+                        <DataTrigger Binding="{Binding Rarity}" Value="{x:Static models:Rarity.Uncommon}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                                        <Grid Width="10"
-                                              Height="10">
-                                            <Rectangle Fill="#FF73CBDE"
-                                                       RenderTransformOrigin="0.5,0.5">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
+                                        <Viewbox Width="20" Stretch="Uniform">
+                                            <Grid Width="28" Height="10">
+                                                <Rectangle
+                                                    Margin="9,0,9,0"
+                                                    Fill="#73ccdf"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                            </Grid>
+                                        </Viewbox>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding Rarity}"
-                                     Value="{x:Static models:Rarity.Rare}">
+                        <DataTrigger Binding="{Binding Rarity}" Value="{x:Static models:Rarity.Rare}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                                        <Grid Width="28"
-                                              Height="10">
-                                            <Rectangle Fill="#FF9A7BFF"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="0,0,18,0">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Fill="#FF9A7BFF"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="18,0,0,0">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
+                                        <Viewbox Width="20" Stretch="Uniform">
+                                            <Grid Width="28" Height="10">
+                                                <Rectangle
+                                                    Margin="0,0,18,0"
+                                                    Fill="#9a7bff"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="18,0,0,0"
+                                                    Fill="#9a7bff"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                            </Grid>
+                                        </Viewbox>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding Rarity}"
-                                     Value="{x:Static models:Rarity.Exotic}">
+                        <DataTrigger Binding="{Binding Rarity}" Value="{x:Static models:Rarity.Exotic}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                                        <Grid Height="19"
-                                              Width="28">
-                                            <Rectangle Width="10"
-                                                       Height="10"
-                                                       Fill="#FFDDBE57"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Top"
-                                                       Margin="0,9,0,0">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Width="10"
-                                                       Height="10"
-                                                       Fill="#FFDDBE57"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Top"
-                                                       Margin="18,9,0,0">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Width="10"
-                                                       Height="10"
-                                                       Fill="#FFDDBE57"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Top">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
+                                        <Viewbox Width="20" Stretch="Uniform">
+                                            <Grid Width="27" Height="26">
+                                                <Rectangle
+                                                    Margin="0,16,17,0"
+                                                    Fill="#eec162"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="9,0,8,16"
+                                                    Fill="#eec162"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="17,16,0,0"
+                                                    Fill="#eec162"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                            </Grid>
+                                        </Viewbox>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding Rarity}"
-                                     Value="{x:Static models:Rarity.Unique}">
+                        <DataTrigger Binding="{Binding Rarity}" Value="{x:Static models:Rarity.Unique}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                                        <Grid Width="28"
-                                              Height="28">
-                                            <Rectangle Fill="#FF38DD70"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="0,9,18,9">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Fill="#FF38DD70"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="18,9,0,9">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Fill="#FF38DD70"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="9,0,9,18">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                            <Rectangle Fill="#FF38DD70"
-                                                       RenderTransformOrigin="0.5,0.5"
-                                                       Margin="9,18,9,0">
-                                                <Rectangle.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform />
-                                                        <SkewTransform />
-                                                        <RotateTransform Angle="45" />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
+                                        <Viewbox Width="20" Stretch="Uniform">
+                                            <Grid Width="27" Height="26">
+                                                <Rectangle
+                                                    Margin="0,16,17,0"
+                                                    Fill="#2fe070"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="17,0,0,16"
+                                                    Fill="#2fe070"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="0,0,17,16"
+                                                    Fill="#2fe070"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                                <Rectangle
+                                                    Margin="17,16,0,0"
+                                                    Fill="#FF38DD70"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stroke="Black">
+                                                    <Rectangle.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform />
+                                                            <SkewTransform />
+                                                            <RotateTransform Angle="45" />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Rectangle.RenderTransform>
+                                                </Rectangle>
+                                            </Grid>
+                                        </Viewbox>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
