@@ -2,17 +2,41 @@
     x:Class="Starfield_Interactive_Smart_Slate.Screens.PlanetaryData.PlanetaryDataMain"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Starfield_Interactive_Smart_Slate.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Starfield_Interactive_Smart_Slate.Screens.PlanetaryData"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Starfield_Interactive_Smart_Slate.Models"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     KeyDown="UserControl_KeyDown"
     PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown"
     SizeChanged="UserControl_SizeChanged"
     SnapsToDevicePixels="True"
     Style="{StaticResource SofiaSansStyle}"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <Thickness x:Key="PanelItemSpacing">0 25 0 0</Thickness>
+        <Thickness x:Key="PanelItemCentering">25 0 25 0</Thickness>
+
+        <SolidColorBrush x:Key="MenuDark" Color="#2b303a" />
+        <SolidColorBrush x:Key="MenuDarkText" Color="#adb1b2" />
+        <SolidColorBrush x:Key="MenuLightText" Color="#e7ebec" />
+
+        <Style x:Key="LabelTextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="/Fonts/#ProFontWindows" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="{StaticResource MenuDarkText}" />
+            <Setter Property="Margin" Value="8,6" />
+        </Style>
+
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,66 +47,115 @@
         </Grid.ColumnDefinitions>
 
         <!--  CELESTIAL BODY OVERVIEW  -->
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Background="#080f1a">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0"
-                Height="35"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                Content="Celestial Body Overview"
-                Style="{StaticResource HeaderStyle}" />
-            <Border Grid.Row="1"
-                Margin="0,1,0,0"
-                Padding="15,5,15,0"
-                BorderBrush="Gray"
-                BorderThickness="1">
-                <Grid Name="celestialBodyOverviewGrid" Visibility="Hidden">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Height="55">
-                        <Label Name="celestialBodyTitleLabel" Grid.Row="0"
-                            VerticalContentAlignment="Top"
-                            Content="{Binding DisplayedCelestialBodyName}"
-                            Style="{StaticResource ContentTitleStyle}" />
-                        <Label Name="celestialBodyMiniTitleLabel" Grid.Row="1"
-                            VerticalContentAlignment="Bottom"
-                            Content="{Binding DisplayedSolarSystemName}"
-                            ContentStringFormat="{}· {0} System"
-                            FontSize="15" />
-                    </Grid>
+            <Grid Name="celestialBodyOverviewGrid" Grid.Row="0"
+                Visibility="Hidden">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                    <Label Grid.Row="1"
-                        Content="Overview"
-                        Style="{StaticResource ContentSubtitleStyle}" />
-
-                    <Label Grid.Row="2">
-                        <TextBlock Name="celestialBodyOverview"
+                <Grid Grid.Row="0" Margin="{StaticResource PanelItemSpacing}">
+                    <StackPanel Margin="{StaticResource PanelItemCentering}">
+                        <TextBlock Name="celestialBodyTitleLabel"
+                            FontSize="36"
+                            Foreground="{StaticResource MenuLightText}"
+                            Text="{Binding DisplayedCelestialBodyName}" />
+                        <TextBlock Name="celestialBodyMiniTitleLabel"
                             FontSize="20"
-                            TextWrapping="Wrap" />
-                    </Label>
-
-                    <Label Grid.Row="3"
-                        Content="Resources"
-                        Style="{StaticResource ContentSubtitleStyle}" />
-
-                    <Label Grid.Row="4">
-                        <TextBlock Name="celestialBodyResourcesLabel"
-                            FontSize="20"
-                            TextWrapping="Wrap" />
-                    </Label>
+                            Foreground="{StaticResource MenuDarkText}"
+                            Text="{Binding SelectedCelestialBody.SystemName, StringFormat={}{0} System}" />
+                        <Grid>
+                            <!--  TODO: spacing hack. fix this.  -->
+                            <TextBlock
+                                FontSize="20"
+                                Foreground="{StaticResource MenuDarkText}"
+                                Text="  " />
+                            <TextBlock
+                                FontSize="20"
+                                Foreground="{StaticResource MenuDarkText}"
+                                Text="{Binding MoonParent, StringFormat={}Moon of {0}}"
+                                Visibility="{Binding SelectedCelestialBody.IsMoon, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+                    </StackPanel>
                 </Grid>
-            </Border>
+
+                <Grid Grid.Row="1"
+                    Margin="{StaticResource PanelItemSpacing}"
+                    Background="{StaticResource MenuDark}">
+                    <Grid Margin="0,25,0,25">
+                        <Grid Margin="{StaticResource PanelItemCentering}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                FontSize="20"
+                                Foreground="{StaticResource MenuDarkText}"
+                                Text="SURVEY" />
+                            <TextBlock Grid.Row="0" Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                FontSize="20"
+                                Foreground="{StaticResource MenuDarkText}"
+                                Text="19%" />
+                            <ProgressBar Grid.Row="1" Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Value="19" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="{StaticResource PanelItemSpacing}">
+                    <controls:CelestialBodyOverview Margin="{StaticResource PanelItemCentering}" CelestialBody="{Binding SelectedCelestialBody}" />
+                </Grid>
+
+                <Border Grid.Row="3"
+                    Margin="{StaticResource PanelItemSpacing}"
+                    BorderBrush="{StaticResource MenuDark}"
+                    BorderThickness="0,1,0,0" />
+
+                <Grid Grid.Row="4">
+                    <StackPanel Margin="{StaticResource PanelItemCentering}">
+                        <TextBlock Grid.Row="4"
+                            Margin="{StaticResource PanelItemSpacing}"
+                            Style="{StaticResource LabelTextBlock}"
+                            Text="RESOURCES" />
+                        <ItemsControl x:Name="celestialBodyResourcesList" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate d:DataType="models:Resource">
+                                    <Grid Margin="2" Background="{StaticResource MenuDark}">
+                                        <Grid Margin="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                Foreground="{StaticResource MenuDarkText}"
+                                                Text="{Binding FullName}" />
+                                            <controls:RarityControl Grid.Column="1" Rarity="{Binding Rarity}" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
         </Grid>
 
         <!--  SOLAR SYSTEMS LIST  -->

@@ -21,6 +21,8 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
 {
     public partial class PlanetaryDataMain : UserControl, INotifyPropertyChanged
     {
+        public CelestialBody? SelectedCelestialBody { get { return displayedCelestialBody; } }
+        public string MoonParent { get; private set; }
         private Window? activePictureViewer = null;
         private List<SolarSystem> allSolarSystems;
         private List<SolarSystem> discoveredSolarSystems;
@@ -295,28 +297,6 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             }
         }
 
-        // TODO: delete later if unused
-        private void ClearCelestialBodyDetails()
-        {
-            displayedCelestialBody = null;
-            selectedCelestialBody = null;
-
-            celestialBodyOverview.Text = null;
-            celestialBodyResourcesLabel.Text = null;
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedCelestialBodyName)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedSolarSystemName)));
-
-            celestialBodyOverviewGrid.Visibility = Visibility.Hidden;
-
-            ResetEntityOverview();
-            ClearAllSelectionsExcept();
-
-            faunasListView.ItemsSource = null;
-            florasListView.ItemsSource = null;
-            outpostsListView.ItemsSource = null;
-        }
-
         private void ClearFaunaSelection()
         {
             faunasListView.UnselectAll();
@@ -368,13 +348,19 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
 
         private void DisplayCelestialBodyDetails(CelestialBody celestialBody)
         {
+            var found = allSolarSystems
+                .SelectMany(ss => ss.CelestialBodies)
+                .Where(sb => (bool)(sb.Moons?.Any(m => m.BodyName == celestialBody.BodyName) ?? false))
+                .ToList();
+            MoonParent = found.FirstOrDefault()?.BodyName ?? "";
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MoonParent)));
+
             entityOverviewGrid.Visibility = Visibility.Hidden;
             editEntityButton.IsEnabled = false;
 
             displayedCelestialBody = celestialBody;
 
-            celestialBodyOverview.Text = celestialBody.ToString();
-            celestialBodyResourcesLabel.Text = celestialBody.ResourcesString;
+            celestialBodyResourcesList.ItemsSource = celestialBody.Resources;
 
             faunasListView.ItemsSource = celestialBody.Faunas;
             addFaunaButton.IsEnabled = ((celestialBody.Faunas?.Count ?? 0) == celestialBody.TotalFauna) ? false : true;
@@ -384,6 +370,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
 
             outpostsListView.ItemsSource = celestialBody.Outposts;
 
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCelestialBody)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedCelestialBodyName)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedSolarSystemName)));
 
