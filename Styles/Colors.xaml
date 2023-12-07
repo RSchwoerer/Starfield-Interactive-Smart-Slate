@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="StarfieldRed" Color="#c82337" />
+    <SolidColorBrush x:Key="StarfieldOrange" Color="#e06236" />
+    <SolidColorBrush x:Key="StarfieldYellow" Color="#d7ab61" />
+    <SolidColorBrush x:Key="StarfieldBlue" Color="#2f4c79" />
+
+    <SolidColorBrush x:Key="BackgroundDark" Color="#080f1a" />
+    <SolidColorBrush x:Key="MenuDark" Color="#2b303a" />
+    <SolidColorBrush x:Key="MenuDarkText" Color="#adb1b2" />
+    <SolidColorBrush x:Key="MenuLightText" Color="#e7ebec" />
+
+    <SolidColorBrush x:Key="Button.Border.Active" Color="#ededed" />
+
+    <SolidColorBrush x:Key="BackgroundLightGrayBrush" Color="#b7b7b7" />
+
+    <SolidColorBrush x:Key="ButtonEnabledForegroundBrush" Color="#2c2c2c" />
+    <SolidColorBrush x:Key="ButtonEnabledBackgroundBrush" Color="#b6b6b6" />
+    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush" Color="#b5b5b5" />
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="#363636" />
+
+
+</ResourceDictionary>

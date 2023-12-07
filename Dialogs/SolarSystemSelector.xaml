@@ -2,53 +2,195 @@
     x:Class="Starfield_Interactive_Smart_Slate.SolarSystemSelector"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Starfield_Interactive_Smart_Slate.Converters"
+    xmlns:models="clr-namespace:Starfield_Interactive_Smart_Slate.Models"
     Title="New System"
-    Width="320"
-    Height="185"
+    Width="740"
+    Height="650"
     Closing="Window_Closing"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Style="{StaticResource SofiaSansStyle}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-            Margin="0,15,0,0"
-            HorizontalContentAlignment="Center"
-            Content="🛈 Expand (optional), then type to search."
-            ToolTipService.InitialShowDelay="200">
-            <Label.ToolTip>
-                <ToolTip Content="Only undiscovered solar systems are available to choose from." />
-            </Label.ToolTip>
-        </Label>
-        <ComboBox Name="solarSystemComboBox" Grid.Row="1"
-            Width="200"
-            Height="25"
-            Margin="0,15,0,0"
-            HorizontalAlignment="Center"
-            PreviewKeyDown="ComboBox_PreviewKeyDown"
-            PreviewMouseLeftButtonDown="solarSystemComboBox_Clicked"
-            SelectionChanged="solarSystemComboBox_SelectionChanged" />
-        <Button Name="discoverButton" Grid.Row="2"
-            Width="80"
-            Height="30"
-            Margin="0,15,0,0"
-            HorizontalAlignment="Center"
-            Click="DiscoverButtonClicked"
-            Content="Discover">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasItemSelected}" Value="True">
-                            <Setter Property="IsEnabled" Value="True" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding HasItemSelected}" Value="False">
-                            <Setter Property="IsEnabled" Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="SelectedBackground" Color="#b7b7b7" />
+        <converters:SystemLevelToColorConverter x:Key="SystemLevelToColorConverter" />
+
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BackgroundDark}">
+        <Grid Margin="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{StaticResource BackgroundLightGrayBrush}">
+                <TextBlock Margin="20,6" Text="SOLAR SYSTEM" />
+            </Border>
+
+            <TextBox Name="SolarSystemFilterTextBox" Grid.Row="1"
+                Padding="20,6"
+                Background="{StaticResource BackgroundDark}"
+                FontSize="20"
+                Foreground="{StaticResource MenuLightText}"
+                TextChanged="SolarSystemFilterChanged" />
+
+            <ListBox Grid.Row="2"
+                x:Name="AllSolarSystemsListBox"
+                Margin="{StaticResource PanelItemSpacing}"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                ItemsSource="{Binding AllSolarSystems}"
+                ScrollViewer.CanContentScroll="false"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                SelectedItem="{Binding SelectedSolarSystem}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Style.Setters>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border>
+                                            <ContentPresenter
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style.Setters>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:SolarSystem}">
+                        <Grid Margin="0,0,25,0" Background="{StaticResource BackgroundDark}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  selection border  -->
+                            <Border Grid.Column="0"
+                                Margin="2"
+                                BorderThickness="12,0,0,0">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                <Setter Property="BorderBrush" Value="#2aa4ba" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
+                            <Border Grid.Column="1"
+                                Margin="2"
+                                Style="{StaticResource DataPanelValueBorder}">
+                                <Grid Margin="25">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                            FontSize="24"
+                                            Style="{StaticResource DataPanelTitleLight}"
+                                            Text="{Binding SystemName}" />
+
+                                        <Border Grid.Column="1"
+                                            Width="28"
+                                            Height="20"
+                                            Background="{Binding SystemLevel, Converter={StaticResource SystemLevelToColorConverter}}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Foreground="{StaticResource BackgroundDark}"
+                                                Style="{StaticResource DataPanelTitleLight}"
+                                                Text="{Binding SystemLevel}" />
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Row="3" Margin="{StaticResource PanelItemSpacing}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*" />
+                    <ColumnDefinition Width="0.3*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="discoverButton" Grid.Column="0"
+                    Margin="0,0,25,0"
+                    HorizontalAlignment="Stretch"
+                    Click="DiscoverButtonClicked"
+                    IsEnabled="{Binding HasItemSelected}"
+                    Style="{StaticResource DefaultButtonStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="DISCOVER" />
+                        <Border Grid.Column="1"
+                            Margin="6,0,0,0"
+                            BorderBrush="{StaticResource ButtonEnabledForegroundBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12">
+                            <TextBlock
+                                Margin="12"
+                                FontFamily="Segoe MDL2 Assets"
+                                FontWeight="Normal"
+                                Text="&#xE751;" />
+                        </Border>
+                    </Grid>
+                </Button>
+                <Button Grid.Column="1"
+                    x:Name="cancelButton"
+                    Click="cancelButton_Click"
+                    Style="{StaticResource DefaultButtonStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="CANCEL" />
+                        <Border Grid.Column="1"
+                            Margin="6,0,0,0"
+                            BorderBrush="{StaticResource ButtonEnabledForegroundBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12">
+                            <TextBlock
+                                Margin="12"
+                                FontWeight="Normal"
+                                Text="ESC" />
+                        </Border>
+                    </Grid>
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

@@ -12,102 +12,65 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-
-        <SolidColorBrush x:Key="MenuDark" Color="#2b303a" />
-        <SolidColorBrush x:Key="MenuDarkText" Color="#adb1b2" />
-        <SolidColorBrush x:Key="MenuLightText" Color="#e7ebec" />
-
-        <Style x:Key="LabelTextBlock" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontFamily" Value="/Fonts/#ProFontWindows" />
-            <Setter Property="FontWeight" Value="500" />
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Foreground" Value="{StaticResource MenuDarkText}" />
-            <Setter Property="Margin" Value="8,6" />
-        </Style>
-
-        <Style x:Key="ValueTextBlock" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontFamily" Value="/Fonts/#ProFontWindows" />
-            <Setter Property="FontWeight" Value="500" />
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Foreground" Value="{StaticResource MenuDarkText}" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Margin" Value="8,6" />
-        </Style>
-
-        <Style x:Key="LabelBorder" TargetType="{x:Type Border}">
-            <Setter Property="BorderThickness" Value="1px" />
-            <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
-            <Setter Property="Background" Value="{StaticResource MenuDark}" />
-            <Setter Property="Margin" Value="0,2,0,2" />
-        </Style>
-
-        <Style x:Key="ValueBorder" TargetType="{x:Type Border}">
-            <Setter Property="BorderThickness" Value="1px" />
-            <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
-            <!--<Setter Property="Background"
-                    Value="#080f1a" />-->
-            <Setter Property="Margin" Value="0,2,0,2" />
-        </Style>
-    </UserControl.Resources>
+    <UserControl.Resources />
 
     <Grid DataContext="{Binding ElementName=parent}">
         <UniformGrid Columns="2" Rows="8">
 
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="TYPE" />
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="TYPE" />
             </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.BodyType, Converter={converters:CapitalizationConverter}}" />
-            </Border>
-
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="GRAVITY" />
-            </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.Gravity, Converter={converters:CapitalizationConverter}}" />
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.BodyType, Converter={converters:CapitalizationConverter}}" />
             </Border>
 
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="TEMPERATURE" />
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="GRAVITY" />
             </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.Temperature, Converter={converters:CapitalizationConverter}}" />
-            </Border>
-
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="ATMOSPHERE" />
-            </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.Atmosphere, Converter={converters:CapitalizationConverter}}" />
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.Gravity, Converter={converters:CapitalizationConverter}}" />
             </Border>
 
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="MAGNETOSPHERE" />
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="TEMPERATURE" />
             </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.Magnetosphere, Converter={converters:CapitalizationConverter}}" />
-            </Border>
-
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="FAUNA" />
-            </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.TotalFauna, Converter={converters:CapitalizationConverter}}" />
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.Temperature, Converter={converters:CapitalizationConverter}}" />
             </Border>
 
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="FLORA" />
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="ATMOSPHERE" />
             </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.TotalFlora, Converter={converters:CapitalizationConverter}}" />
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.Atmosphere, Converter={converters:CapitalizationConverter}}" />
             </Border>
 
-            <Border Style="{StaticResource LabelBorder}">
-                <TextBlock Style="{StaticResource LabelTextBlock}" Text="WATER" />
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="MAGNETOSPHERE" />
             </Border>
-            <Border Style="{StaticResource ValueBorder}">
-                <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding CelestialBody.Water, Converter={converters:CapitalizationConverter}}" />
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.Magnetosphere, Converter={converters:CapitalizationConverter}}" />
+            </Border>
+
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="FAUNA" />
+            </Border>
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.TotalFauna, Converter={converters:CapitalizationConverter}}" />
+            </Border>
+
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="FLORA" />
+            </Border>
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.TotalFlora, Converter={converters:CapitalizationConverter}}" />
+            </Border>
+
+            <Border Style="{StaticResource DataPanelLabelBorder}">
+                <TextBlock Style="{StaticResource DataPanelLabelTextBlock}" Text="WATER" />
+            </Border>
+            <Border Style="{StaticResource DataPanelValueBorder}">
+                <TextBlock Style="{StaticResource DataPanelValueTextBlock}" Text="{Binding CelestialBody.Water, Converter={converters:CapitalizationConverter}}" />
             </Border>
         </UniformGrid>
     </Grid>

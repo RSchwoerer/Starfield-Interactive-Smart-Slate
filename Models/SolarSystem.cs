@@ -18,6 +18,9 @@ namespace Starfield_Interactive_Smart_Slate.Models
             CelestialBodies = CelestialBodiesBuilder.Values.OfType<CelestialBody>().ToList();
         }
 
+	   public int NumberOfPlanets => CelestialBodies.Count(b => !b.IsMoon);
+        public int NumberOfMoons => CelestialBodies.Count(b => b.IsMoon);
+
         public SolarSystem DeepCopy()
         {
             var solarSystemCopy = new SolarSystem
