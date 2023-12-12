@@ -110,7 +110,9 @@
 
 	<ItemGroup>
 	  <Resource Include="Fonts\DYLOVA5TUFF.ttf" />
-	  <Resource Include="Fonts\ProFontWindows.ttf" />
+	  <Resource Include="Fonts\ProFontWindows.ttf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 	<ItemGroup>

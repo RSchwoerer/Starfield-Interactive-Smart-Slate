@@ -28,6 +28,7 @@
             </Style>
 
             <Style x:Key="ContentTitleStyle" TargetType="{x:Type Control}">
+                <Setter Property="Foreground" Value="{StaticResource Text.Light.Foreground.Brush}" />
                 <Setter Property="FontSize" Value="25" />
                 <Setter Property="FontWeight" Value="Black" />
             </Style>
@@ -40,10 +41,11 @@
 
             <!--  CONSTANTS =========================================================================================  -->
 
-            <FontFamily x:Key="SFFont">/Fonts/#ProFontWindows</FontFamily>
+            <FontFamily x:Key="SFFont">pack://application:,,,/Fonts/#ProFontWindows</FontFamily>
 
             <Thickness x:Key="PanelItemSpacing">0 25 0 0</Thickness>
             <Thickness x:Key="PanelItemCentering">25 0 25 0</Thickness>
+            <Thickness x:Key="PanelItemSpacingAndCentering">25 25 25 0</Thickness>
 
 
             <!--  CONTROL STYLES =========================================================================================  -->
@@ -60,6 +62,14 @@
                 <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
                 <Setter Property="Margin" Value="0,2,0,2" />
             </Style>
+
+
+            <Style x:Key="DataLightBase" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+
 
             <Style x:Key="DataPanelTitleLight" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontFamily" Value="{StaticResource SFFont}" />

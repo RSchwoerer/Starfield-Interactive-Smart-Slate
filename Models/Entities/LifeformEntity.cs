@@ -56,7 +56,7 @@ namespace Starfield_Interactive_Smart_Slate.Models.Entities
                 }
                 else
                 {
-                    return PrimaryDrops[0].PrettifiedName;
+                    return PrimaryDrops[0].FullName;
                 }
             }
         }

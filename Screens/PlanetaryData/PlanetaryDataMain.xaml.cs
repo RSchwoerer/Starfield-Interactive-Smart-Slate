@@ -356,7 +356,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MoonParent)));
 
             entityOverviewGrid.Visibility = Visibility.Hidden;
-            editEntityButton.IsEnabled = false;
+            editEntityButton.Visibility = Visibility.Hidden;
 
             displayedCelestialBody = celestialBody;
 
@@ -381,10 +381,10 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
         {
             displayedEntity = entity;
 
-            entityTitleLabel.Content = entity.Name;
+            entityTitleLabel.Text = entity.Name;
             entityNotesTextBlock.Text = entity.Notes;
             entityOverviewGrid.Visibility = Visibility.Visible;
-            editEntityButton.IsEnabled = true;
+            editEntityButton.Visibility = Visibility.Visible;
             pictureGrid.ItemsSource = entity.Pictures;
 
             entityOverviewScrollViewer.ScrollToTop();
@@ -392,32 +392,35 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
 
         private void DisplayFaunaDetails(Fauna fauna)
         {
-            entitySubtitleLabel.Content = "· Fauna";
+            entitySubtitleLabel.Text = "Fauna";
 
-            lifeformResourceTitleLabel.Visibility = Visibility.Visible;
+            //lifeformResourceTitleLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Visibility = Visibility.Visible;
-            lifeformResourceLabel.Content = fauna.ResourceString;
+            lifeformResourceLabel.Text = fauna.ResourceString;
+            lifeformResourceRarity.Rarity = fauna.PrimaryDrops[0].Rarity;
+
 
             DisplayEntityDetails(fauna);
         }
 
         private void DisplayFloraDetails(Flora flora)
         {
-            entitySubtitleLabel.Content = "· Flora";
+            entitySubtitleLabel.Text = "Flora";
 
-            lifeformResourceTitleLabel.Visibility = Visibility.Visible;
+            //lifeformResourceTitleLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Visibility = Visibility.Visible;
-            lifeformResourceLabel.Content = flora.ResourceString;
+            lifeformResourceLabel.Text = flora.ResourceString;
+            lifeformResourceRarity.Rarity = flora.PrimaryDrops[0].Rarity;
 
             DisplayEntityDetails(flora);
         }
 
         private void DisplayOutpostDetails(Outpost outpost)
         {
-            entitySubtitleLabel.Content = "· Outpost";
+            entitySubtitleLabel.Text = "Outpost";
 
             // outposts have no resource drops
-            lifeformResourceTitleLabel.Visibility = Visibility.Collapsed;
+            //lifeformResourceTitleLabel.Visibility = Visibility.Collapsed;
             lifeformResourceLabel.Visibility = Visibility.Collapsed;
 
             DisplayEntityDetails(outpost);
@@ -824,7 +827,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
         {
             displayedEntity = null;
             entityOverviewGrid.Visibility = Visibility.Hidden;
-            editEntityButton.IsEnabled = false;
+            editEntityButton.Visibility = Visibility.Hidden;
         }
 
         private void resetFilter_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -1271,6 +1274,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             columnsInt = Math.Max(columnsInt, 1);
 
             PictureGridColumns = columnsInt;
+            Debug.WriteLine(PictureGridColumns);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureGridColumns)));
         }
 

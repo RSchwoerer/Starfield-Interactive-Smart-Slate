@@ -19,5 +19,11 @@
     <SolidColorBrush x:Key="ButtonDisabledForegroundBrush" Color="#b5b5b5" />
     <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="#363636" />
 
+    <SolidColorBrush x:Key="Text.Dark.Foreground.Brush" Color="#2c2c2c" />
+    <SolidColorBrush x:Key="Text.Light.Foreground.Brush" Color="#e7ebec" />
+
+
+    <SolidColorBrush x:Key="Border.Light" Color="#c2c2c2" />
+    <SolidColorBrush x:Key="Border.Medium" Color="#b6b6b6" />
 
 </ResourceDictionary>

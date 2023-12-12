@@ -2,9 +2,12 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Starfield ISS;component/Styles/Controls/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Starfield ISS;component/Styles/Controls/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Starfield ISS;component/Styles/Controls/TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource SFTextBox}" TargetType="{x:Type TextBox}" />
+    <Style BasedOn="{StaticResource SFTabControlStyle}" TargetType="{x:Type TabControl}" />
+    <Style BasedOn="{StaticResource SFTabItemStyle}" TargetType="{x:Type TabItem}" />
 
 </ResourceDictionary>

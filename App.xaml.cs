@@ -153,16 +153,22 @@ namespace Starfield_Interactive_Smart_Slate
             DataRepository.InitializeUserID();
 
             // initialize analytics
+            string LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var installId = AppCenter.GetInstallIdAsync().Result.ToString();
+            var AppCenterFilesDirectoryPath = Path.Combine(LocalAppData, "Microsoft", "AppCenter", installId);
+            string AppCenterDatabasePath = Path.Combine(AppCenterFilesDirectoryPath, "Logs.db");
+            Console.WriteLine(AppCenterDatabasePath);
+
             AppCenter.SetUserId(DataRepository.UserID);
             AppCenter.LogLevel = LogLevel.Verbose;
             AppCenter.SetCountryCode(RegionInfo.CurrentRegion.TwoLetterISORegionName);
             Analytics.EnableManualSessionTracker();
             AppCenter.Start("", typeof(Analytics), typeof(Crashes));
             Analytics.StartSession();
-            if (!AppCenter.Configured)
-            {
-                MessageBox.Show("Analytics not configured!", "Warning");
-            }
+            //if (!AppCenter.Configured)
+            //{
+            //    MessageBox.Show("Analytics not configured!", "Warning");
+            //}
 
             // load in user settings from DB
             UserSettings.LoadSettings();
