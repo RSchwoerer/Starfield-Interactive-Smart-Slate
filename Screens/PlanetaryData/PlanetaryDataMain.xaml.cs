@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -397,7 +398,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             //lifeformResourceTitleLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Text = fauna.ResourceString;
-            lifeformResourceRarity.Rarity = fauna.PrimaryDrops[0].Rarity;
+            lifeformResourceRarity.Rarity = fauna.PrimaryDrops?.FirstOrDefault()?.Rarity ?? Rarity.Common;
 
 
             DisplayEntityDetails(fauna);
@@ -410,7 +411,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             //lifeformResourceTitleLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Visibility = Visibility.Visible;
             lifeformResourceLabel.Text = flora.ResourceString;
-            lifeformResourceRarity.Rarity = flora.PrimaryDrops[0].Rarity;
+            lifeformResourceRarity.Rarity = flora.PrimaryDrops?.FirstOrDefault()?.Rarity ?? Rarity.Common;
 
             DisplayEntityDetails(flora);
         }
@@ -546,18 +547,18 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             recoverCelestialBodySelection();
         }
 
-        private ListView FindNestedListView(DependencyObject parent)
+        private Selector FindNestedListView(DependencyObject parent)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                if (child is ListView nestedListView)
+                if (child is Selector nestedListView)
                 {
                     return nestedListView;
                 }
                 else
                 {
-                    ListView result = FindNestedListView(child);
+                    Selector result = FindNestedListView(child);
                     if (result != null)
                     {
                         return result;
@@ -806,7 +807,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             if (selectedSolarSystem != null)
             {
                 var solarSystemListViewItem = containerGenerator.ContainerFromItem(selectedSolarSystem);
-                ListView celestialBodyListView = FindNestedListView(solarSystemListViewItem);
+                var celestialBodyListView = FindNestedListView(solarSystemListViewItem);
                 celestialBodyListView.SelectedItem = selectedCelestialBody;
             }
         }
@@ -891,7 +892,7 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             // set UI to selected state
             var solarSystemListViewItem = solarSystemsListView
                 .ItemContainerGenerator.ContainerFromItem(selectedSolarSystem);
-            ListView celestialBodyListView = FindNestedListView(solarSystemListViewItem);
+            var celestialBodyListView = FindNestedListView(solarSystemListViewItem);
             celestialBodyListView.SelectedItem = celestialBody;
 
             // scroll parent solar system into view

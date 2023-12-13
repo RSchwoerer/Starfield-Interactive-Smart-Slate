@@ -50,6 +50,19 @@
 
             <!--  CONTROL STYLES =========================================================================================  -->
 
+            <Style x:Key="MainPanelBorder" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1px" />
+                <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
+            </Style>
+
+            <Style
+                x:Key="MainPanelSpacerBorder"
+                BasedOn="{StaticResource MainPanelBorder}"
+                TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                <Setter Property="Margin" Value="{StaticResource PanelItemSpacing}" />
+            </Style>
+
             <Style x:Key="DataPanelLabelBorder" TargetType="{x:Type Border}">
                 <Setter Property="BorderThickness" Value="1px" />
                 <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />

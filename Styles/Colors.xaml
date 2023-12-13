@@ -4,6 +4,7 @@
     <SolidColorBrush x:Key="StarfieldOrange" Color="#e06236" />
     <SolidColorBrush x:Key="StarfieldYellow" Color="#d7ab61" />
     <SolidColorBrush x:Key="StarfieldBlue" Color="#2f4c79" />
+    <SolidColorBrush x:Key="StarfieldWhite" Color="#f5f7f7" />
 
     <SolidColorBrush x:Key="BackgroundDark" Color="#080f1a" />
     <SolidColorBrush x:Key="MenuDark" Color="#2b303a" />
@@ -21,9 +22,14 @@
 
     <SolidColorBrush x:Key="Text.Dark.Foreground.Brush" Color="#2c2c2c" />
     <SolidColorBrush x:Key="Text.Light.Foreground.Brush" Color="#e7ebec" />
+    <SolidColorBrush x:Key="Text.Disabled.Foreground.Brush" Color="#adb1b2" />
 
 
     <SolidColorBrush x:Key="Border.Light" Color="#c2c2c2" />
     <SolidColorBrush x:Key="Border.Medium" Color="#b6b6b6" />
+
+
+    <SolidColorBrush x:Key="ItemSelected.Active.Background" Color="#b6b6b6" />
+    <SolidColorBrush x:Key="ItemSelected.Highlight.Background" Color="#2aa4ba" />
 
 </ResourceDictionary>
