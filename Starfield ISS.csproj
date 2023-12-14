@@ -19,6 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Fonts\DYLOVA5TUFF.ttf" />
+		<None Remove="Fonts\ProFontWindows.ttf" />
 		<None Remove="Fonts\SofiaSans-Black.ttf" />
 		<None Remove="Fonts\SofiaSans-BlackItalic.ttf" />
 		<None Remove="Fonts\SofiaSans-Bold.ttf" />
@@ -39,6 +41,7 @@
 		<None Remove="Fonts\SofiaSans-ThinItalic.ttf" />
 		<None Remove="Images\filter_icon.png" />
 		<None Remove="Images\starfield_outpost_icon.png" />
+		<None Remove="Images\starfield_outpost_icon_lt.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,7 +111,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Fonts\DYLOVA5TUFF.ttf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Fonts\ProFontWindows.ttf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Resource Include="Images\filter_icon.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\starfield_outpost_icon_lt.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Resource>
 	  <Resource Include="Images\starfield_outpost_icon.png">

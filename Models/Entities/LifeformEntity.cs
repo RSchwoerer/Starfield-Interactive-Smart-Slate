@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Starfield_Interactive_Smart_Slate.Models.Entities
 {
@@ -51,6 +52,8 @@ namespace Starfield_Interactive_Smart_Slate.Models.Entities
             }
         }
 
+        public Rarity PrimaryResourceRarity => PrimaryDrops?.FirstOrDefault()?.Rarity ?? Rarity.Common;
+
         public string ResourceString
         {
             get
@@ -61,7 +64,7 @@ namespace Starfield_Interactive_Smart_Slate.Models.Entities
                 }
                 else
                 {
-                    return PrimaryDrops[0].PrettifiedName;
+                    return PrimaryDrops[0].FullName;
                 }
             }
         }

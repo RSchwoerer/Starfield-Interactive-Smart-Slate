@@ -18,6 +18,18 @@ namespace Starfield_Interactive_Smart_Slate.Models
 
         public bool IsMoon { get; set; }
 
+        public string MoonParent
+        {
+            get
+            {
+                var found = ParentSystem
+                    .CelestialBodies
+                    .Where(sb => (bool)(sb.Moons?.Any(m => m.BodyName == BodyName) ?? false))
+                    .ToList();
+                return found.FirstOrDefault()?.BodyName ?? "";
+            }
+        }
+
         public string BodyType { get; set; }
 
         public double Gravity { get; set; }
@@ -41,6 +53,7 @@ namespace Starfield_Interactive_Smart_Slate.Models
             get => faunas;
             set
             {
+                value ??= new ObservableCollection<Fauna>();
                 SetProperty(ref faunas, value);
 
                 if (faunas != null)
@@ -50,6 +63,7 @@ namespace Starfield_Interactive_Smart_Slate.Models
                         OnPropertyChanged(nameof(LifeformProgress));
                         OnPropertyChanged(nameof(CanAddFauna));
                         OnPropertyChanged(nameof(OverviewString));
+                        OnPropertyChanged(nameof(SurveyPercent));
                     };
                 }
             }
@@ -60,6 +74,7 @@ namespace Starfield_Interactive_Smart_Slate.Models
             get => floras;
             set
             {
+                value ??= new ObservableCollection<Flora>();
                 SetProperty(ref floras, value);
 
                 if (floras != null)
@@ -69,6 +84,7 @@ namespace Starfield_Interactive_Smart_Slate.Models
                         OnPropertyChanged(nameof(LifeformProgress));
                         OnPropertyChanged(nameof(CanAddFlora));
                         OnPropertyChanged(nameof(OverviewString));
+                        OnPropertyChanged(nameof(SurveyPercent));
                     };
                 }
             }
@@ -79,6 +95,7 @@ namespace Starfield_Interactive_Smart_Slate.Models
             get => outposts;
             set
             {
+                value ??= new ObservableCollection<Outpost>();
                 SetProperty(ref outposts, value);
 
                 if (outposts != null)
@@ -92,12 +109,14 @@ namespace Starfield_Interactive_Smart_Slate.Models
         }
 
         #region ---- helper attributes to display resource search ----
+
         public List<CelestialBody>? Moons;
 
         public bool Show { get; set; }
 
         public bool GrayOut { get; set; }
-        #endregion
+
+        #endregion ---- helper attributes to display resource search ----
 
         public string? LifeformProgress
         {
@@ -105,17 +124,25 @@ namespace Starfield_Interactive_Smart_Slate.Models
             {
                 if (TotalFauna > 0 || TotalFlora > 0)
                 {
-                    int surveyedFaunas = Faunas?.Where(fauna => fauna.IsSurveyed).Count() ?? 0;
-                    int faunasPoints = surveyedFaunas + (Faunas?.Count ?? 0);
-                    int surveyedFloras = Floras?.Where(flora => flora.IsSurveyed).Count() ?? 0;
-                    int florasPoints = surveyedFloras + (Floras?.Count ?? 0);
-                    double surveyPercent = 100.0 * (faunasPoints + florasPoints) / ((TotalFauna + TotalFlora) * 2);
-                    return $"🧬 ({surveyPercent:F0}%)";
+                    return $"🧬 ({(double)SurveyPercent:F0}%)";
                 }
                 else
                 {
                     return null;
                 }
+            }
+        }
+
+        public double SurveyPercent
+        {
+            get
+            {
+                int surveyedFaunas = Faunas?.Where(fauna => fauna.IsSurveyed).Count() ?? 0;
+                int faunasPoints = surveyedFaunas + (Faunas?.Count ?? 0);
+                int surveyedFloras = Floras?.Where(flora => flora.IsSurveyed).Count() ?? 0;
+                int florasPoints = surveyedFloras + (Floras?.Count ?? 0);
+                double surveyPercent = 100.0 * (faunasPoints + florasPoints) / ((TotalFauna + TotalFlora) * 2);
+                return surveyPercent;
             }
         }
 

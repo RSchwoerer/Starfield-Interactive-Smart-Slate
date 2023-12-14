@@ -2,38 +2,138 @@
     x:Class="Starfield_Interactive_Smart_Slate.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Starfield_Interactive_Smart_Slate"
     StartupUri="MainWindow.xaml">
+
     <Application.Resources>
-        <Style x:Key="SofiaSansStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
-            <Setter Property="FontSize" Value="15" />
-        </Style>
-        <Style x:Key="HeaderStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="FontSize" Value="17" />
-        </Style>
-        <Style x:Key="ThinHeaderStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
-            <Setter Property="FontWeight" Value="Regular" />
-            <Setter Property="FontSize" Value="17" />
-        </Style>
+        <ResourceDictionary>
 
-        <Style x:Key="ContentTitleStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontSize" Value="25" />
-            <Setter Property="FontWeight" Value="Black" />
-        </Style>
-        <Style x:Key="ContentSubtitleStyle" TargetType="{x:Type Control}">
-            <Setter Property="Margin" Value="0,10,0,0" />
-            <Setter Property="Background" Value="#fff5f5f5" />
-            <Setter Property="FontSize" Value="17" />
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Starfield ISS;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Starfield ISS;component/Styles/Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="OutpostIcon" TargetType="Image">
-            <Setter Property="Source" Value="Images/starfield_outpost_icon.png" />
-            <Setter Property="Height" Value="11" />
-        </Style>
+
+
+            <Style x:Key="SofiaSansStyle" TargetType="{x:Type Control}">
+                <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+
+            <Style x:Key="HeaderStyle" TargetType="{x:Type Control}">
+                <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+
+            <Style x:Key="ThinHeaderStyle" TargetType="{x:Type Control}">
+                <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
+                <Setter Property="FontWeight" Value="Regular" />
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+
+
+            <Style x:Key="ContentTitleStyle" TargetType="{x:Type Control}">
+                <Setter Property="Foreground" Value="{StaticResource Text.Light.Foreground.Brush}" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="FontWeight" Value="Black" />
+            </Style>
+
+            <Style x:Key="ContentSubtitleStyle" TargetType="{x:Type Control}">
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="Background" Value="#fff5f5f5" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+
+            <Style x:Key="OutpostIcon" TargetType="Image">
+                <Setter Property="Source" Value="Images/starfield_outpost_icon.png" />
+                <Setter Property="Height" Value="11" />
+            </Style>
+
+            <!--  CONSTANTS =========================================================================================  -->
+
+            <FontFamily x:Key="SFFont">pack://application:,,,/Fonts/#ProFontWindows</FontFamily>
+
+            <Thickness x:Key="PanelItemSpacing">0 25 0 0</Thickness>
+            <Thickness x:Key="PanelItemCentering">25 0 25 0</Thickness>
+            <Thickness x:Key="PanelItemSpacingAndCentering">25 25 25 0</Thickness>
+
+
+            <!--  CONTROL STYLES =========================================================================================  -->
+
+            <Style x:Key="SFFontBaseStyle" TargetType="{x:Type Control}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="/Fonts/#Sofia Sans" />
+            </Style>
+
+            <Style x:Key="MainPanelBorder" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1px" />
+                <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
+            </Style>
+
+            <Style
+                x:Key="MainPanelSpacerBorder"
+                BasedOn="{StaticResource MainPanelBorder}"
+                TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                <Setter Property="Margin" Value="{StaticResource PanelItemSpacing}" />
+            </Style>
+
+            <Style x:Key="DataPanelLabelBorder" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1px" />
+                <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
+                <Setter Property="Background" Value="{StaticResource MenuDark}" />
+                <Setter Property="Margin" Value="0,2,0,2" />
+            </Style>
+
+            <Style x:Key="DataPanelValueBorder" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1px" />
+                <Setter Property="BorderBrush" Value="{StaticResource MenuDark}" />
+                <Setter Property="Margin" Value="0,2,0,2" />
+            </Style>
+
+
+            <Style x:Key="DataLightBase" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+
+
+            <Style x:Key="DataPanelTitleLight" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{StaticResource MenuLightText}" />
+            </Style>
+
+            <Style x:Key="DataPanelLabelTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{StaticResource MenuDarkText}" />
+                <Setter Property="Margin" Value="8,6" />
+            </Style>
+
+            <Style x:Key="DataPanelValueTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{StaticResource MenuDarkText}" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="8,6" />
+            </Style>
+
+            <Style x:Key="ButtonLabelTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource SFFont}" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

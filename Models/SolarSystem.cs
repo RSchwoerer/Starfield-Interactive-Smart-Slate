@@ -15,6 +15,9 @@ namespace Starfield_Interactive_Smart_Slate.Models
         public List<CelestialBody> CelestialBodies { get; set; }
         public ObservableCollection<CelestialBody> ShownCelestialBodies { get; set; }
 
+  		public int NumberOfPlanets => CelestialBodies.Count(b => !b.IsMoon);
+        public int NumberOfMoons => CelestialBodies.Count(b => b.IsMoon);
+
         public void BuildList()
         {
             CelestialBodies = CelestialBodiesBuilder.Values.OfType<CelestialBody>().ToList();

@@ -14,6 +14,8 @@
         public string RarityString { get { return $"{resourceRarity.ToString()} {resourceRarity.GetDiamonds()}"; } }
         public string ShortName { get { return resourceShortName; } }
 
+        public Rarity Rarity { get { return resourceRarity; } }
+
         public Resource(int resourceID, ResourceType resourceType, string resourceName, string? resourceShortName, Rarity resourceRarity)
         {
             this.resourceID = resourceID;

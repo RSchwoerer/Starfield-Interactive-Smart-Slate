@@ -12,22 +12,29 @@
     KeyDown="Window_KeyDown"
     Loaded="Window_Loaded"
     SizeChanged="Window_SizeChanged"
-    Style="{StaticResource SofiaSansStyle}"
+    Style="{StaticResource SFFontBaseStyle}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+    <!--  Background="{StaticResource BackgroundDark}"  -->
     <Grid>
-        <TabControl>
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="TabItem">
-                    <Setter Property="Height" Value="35" />
-                </Style>
-            </TabControl.ItemContainerStyle>
+        <Grid.Background>
+            <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                <RadialGradientBrush.GradientStops>
+                    <GradientStop Offset="0" Color="#0c1c23" />
+                    <GradientStop Offset="1.0" Color="#060e12" />
+                    <!--<GradientStop Offset="0" Color="Lime" />
+                    <GradientStop Offset="1.0" Color="Orange" />-->
+                </RadialGradientBrush.GradientStops>
+            </RadialGradientBrush>
+        </Grid.Background>
+
+        <TabControl Margin="{StaticResource PanelItemSpacingAndCentering}">
 
             <!--  DISCOVERED PLANET DATA  -->
             <TabItem
-                Width="175"
-                Header="Planetary Data"
+                MinHeight="35"
+                Header="PLANETARY DATA"
                 MouseEnter="TabItem_MouseEnter"
                 PreviewMouseLeftButtonDown="TabClicked">
                 <planetarydata:PlanetaryDataMain />
@@ -35,8 +42,7 @@
 
             <!--  INORGANIC SEARCH  -->
             <TabItem
-                Width="200"
-                Header="Inorganic Resource Search"
+                Header="INORGANIC RESOURCE SEARCH"
                 MouseEnter="TabItem_MouseEnter"
                 PreviewMouseLeftButtonDown="TabClicked">
                 <screens:InorganicResourceSearch />
@@ -44,8 +50,7 @@
 
             <!--  ORGANIC SEARCH  -->
             <TabItem
-                Width="200"
-                Header="Organic Resource Search"
+                Header="ORGANIC RESOURCE SEARCH"
                 MouseEnter="TabItem_MouseEnter"
                 PreviewMouseLeftButtonDown="TabClicked">
                 <screens:OrganicResourceSearch />
@@ -53,77 +58,91 @@
 
             <!--  SETTINGS PAGE  -->
             <TabItem
-                Width="100"
-                Header="Settings"
+                Header="SETTINGS"
                 MouseEnter="TabItem_MouseEnter"
                 PreviewMouseLeftButtonDown="TabClicked">
-                <Border
-                    MaxWidth="500"
-                    Margin="10,50,10,50"
-                    BorderBrush="DarkGray"
-                    BorderThickness="1">
-                    <Grid Margin="25">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0"
-                            HorizontalContentAlignment="Center"
-                            Content="Settings"
-                            Style="{StaticResource ContentTitleStyle}" />
-                        <CheckBox Name="EnableSoundsCheckBox" Grid.Row="1"
-                            Height="30"
-                            Margin="0,10,0,0"
-                            VerticalContentAlignment="Center"
-                            Click="EnableSoundsCheckBox_Click"
-                            Content="Enable sounds"
+                <Grid
+                    Width="500"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource SFFontBaseStyle}" TargetType="Label">
+                            <Setter Property="Foreground" Value="{StaticResource Text.Light.Foreground.Brush}" />
+                            <Setter Property="FontSize" Value="20" />
+                        </Style>
+                        <Style BasedOn="{StaticResource SFFontBaseStyle}" TargetType="CheckBox">
+                            <Setter Property="Foreground" Value="{StaticResource Text.Light.Foreground.Brush}" />
+                            <Setter Property="FontSize" Value="20" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0"
+                        HorizontalContentAlignment="Center"
+                        Content="SETTINGS"
+                        FontSize="20" />
+                    <CheckBox Name="EnableSoundsCheckBox" Grid.Row="1"
+                        Height="30"
+                        Margin="0,10,0,0"
+                        VerticalContentAlignment="Center"
+                        Click="EnableSoundsCheckBox_Click"
+                        Content="Enable sounds"
+                        FontSize="18"
+                        IsChecked="{Binding EnableSounds}" />
+                    <CheckBox Name="EnableAnalyticsCheckBox" Grid.Row="2"
+                        Height="30"
+                        Margin="0,10,0,0"
+                        VerticalContentAlignment="Center"
+                        Click="EnableAnalyticsCheckBox_Click"
+                        Content="Allow anonymous analytics data collection"
+                        FontSize="18"
+                        IsChecked="{Binding EnableAnalytics}" />
+                    <CheckBox Name="EnableUpdateNotificationCheckBox" Grid.Row="3"
+                        Height="30"
+                        Margin="0,10,0,0"
+                        VerticalContentAlignment="Center"
+                        Click="EnableUpdateNotificationCheckBox_Click"
+                        Content="Notify of new version at launch"
+                        FontSize="18"
+                        IsChecked="{Binding EnableUpdateNotification}" />
+                    <Label Name="NewVersionAvailableSettingsLabel" Grid.Row="4"
+                        Margin="30,0,0,0"
+                        HorizontalContentAlignment="Left"
+                        Visibility="Collapsed">
+                        <Hyperlink Name="NewVersionAvailableSettingsHyperlink"
                             FontSize="18"
-                            IsChecked="{Binding EnableSounds}" />
-                        <CheckBox Name="EnableAnalyticsCheckBox" Grid.Row="2"
-                            Height="30"
-                            Margin="0,10,0,0"
-                            VerticalContentAlignment="Center"
-                            Click="EnableAnalyticsCheckBox_Click"
-                            Content="Allow anonymous analytics data collection"
-                            FontSize="18"
-                            IsChecked="{Binding EnableAnalytics}" />
-                        <CheckBox Name="EnableUpdateNotificationCheckBox" Grid.Row="3"
-                            Height="30"
-                            Margin="0,10,0,0"
-                            VerticalContentAlignment="Center"
-                            Click="EnableUpdateNotificationCheckBox_Click"
-                            Content="Notify of new version at launch"
-                            FontSize="18"
-                            IsChecked="{Binding EnableUpdateNotification}" />
-                        <Label Name="NewVersionAvailableSettingsLabel" Grid.Row="4"
-                            Margin="30,0,0,0"
-                            HorizontalContentAlignment="Left"
-                            Visibility="Collapsed">
-                            <Hyperlink Name="NewVersionAvailableSettingsHyperlink"
-                                FontSize="18"
-                                FontWeight="Bold"
-                                NavigateUri="https://github.com/aquasarus/Starfield-Interactive-Smart-Slate/releases"
-                                RequestNavigate="NavigateToHyperlink">
-                                > New Version vx.x.x Available
-                            </Hyperlink>
-                        </Label>
-                    </Grid>
-                </Border>
+                            FontWeight="Bold"
+                            NavigateUri="https://github.com/aquasarus/Starfield-Interactive-Smart-Slate/releases"
+                            RequestNavigate="NavigateToHyperlink">
+                            > New Version vx.x.x Available
+                        </Hyperlink>
+                    </Label>
+                </Grid>
             </TabItem>
 
             <!--  ABOUT PAGE  -->
             <TabItem
-                Width="120"
-                Header="About / Help"
+                Header="ABOUT"
                 MouseEnter="TabItem_MouseEnter"
                 PreviewMouseLeftButtonDown="TabClicked">
                 <Grid
-                    Margin="0,0,0,200"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
+
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource SFFontBaseStyle}" TargetType="Label">
+                            <Setter Property="Foreground" Value="{StaticResource Text.Light.Foreground.Brush}" />
+                            <Setter Property="FontSize" Value="20" />
+                        </Style>
+                    </Grid.Resources>
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -135,6 +154,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
                     <Label Grid.Row="0"
                         HorizontalContentAlignment="Center"
                         Content="Starfield ISS"
