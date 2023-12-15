@@ -23,11 +23,44 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
             }
         }
 
-        public List<SolarSystem> DisplayedSolarSystems
+        //public List<SolarSystem> DisplayedSolarSystems
+        //{
+        //    get => displayedSolarSystems;
+        //    set => SetProperty(ref displayedSolarSystems, value);
+        //}
+
+        public ICollectionView DisplayedSolarSystems
         {
-            get => displayedSolarSystems;
-            set => SetProperty(ref displayedSolarSystems, value);
+            get => _DisplayedSolarSystems;
+            private set => SetProperty(ref _DisplayedSolarSystems, value);
         }
+
+        public string SolarSystemsFilter
+        {
+            get => _SolarSystemsFilter;
+            set => SetProperty(ref _SolarSystemsFilter, value);
+        }
+
+        public bool LifeformFilterEnabled
+        {
+            get => _LifeformFilterEnabled;
+            set
+            {
+                SetProperty(ref _LifeformFilterEnabled, value);
+                DisplayedSolarSystems.Refresh();
+            }
+        }
+
+        public bool OutpostFilterEnabled
+        {
+            get => _OutpostFilterEnabled;
+            set
+            {
+                SetProperty(ref _OutpostFilterEnabled, value);
+                DisplayedSolarSystems.Refresh();
+            }
+        }
+
 
         // this is used for the lifeform edit combo box, because Terrormorphs have a scanned resource of None
         public List<Resource> SelectableOrganicResources
@@ -74,8 +107,11 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
         private CelestialBody? selectedCelestialBody;
         private Entity? selectedEntity;
         private Entity? displayedEntity;
-
+        private ICollectionView _DisplayedSolarSystems;
         private int pictureGridColumns;
+        private string _SolarSystemsFilter = string.Empty;
+        private bool _LifeformFilterEnabled;
+        private bool _OutpostFilterEnabled;
 
         private PlanetaryDataViewModel()
         {
@@ -87,34 +123,14 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
         // ignores case, whitespace, symbols
         public void SearchSolarSystemsByText(string filterText)
         {
-            ICollectionView view = CollectionViewSource.GetDefaultView(DisplayedSolarSystems);
-
-            if (string.IsNullOrWhiteSpace(filterText))
-            {
-                view.Filter = null;
-            }
-            else
-            {
-                filterText = new string(filterText.Where(char.IsLetter).ToArray()).ToLower();
-                view.Filter = item =>
-                {
-                    if (item is SolarSystem solarSystem)
-                    {
-                        return new string(solarSystem.SystemName.Where(char.IsLetter).ToArray()).ToLower().Contains(filterText)
-                        || solarSystem.CelestialBodies.Where(
-                            cb => new string(cb.BodyName.Where(char.IsLetter).ToArray()).ToLower().Contains(filterText)).Any();
-                    }
-                    return false;
-                };
-            }
-
-            OnPropertyChanged(nameof(DisplayedSolarSystems));
+            DisplayedSolarSystems.Refresh();
         }
 
         public void FilterSolarSystemsByLifeforms()
         {
             // use DiscoveredSolarSystems as base
-            DisplayedSolarSystems = mainViewModel.DiscoveredSolarSystems.Select(
+            DisplayedSolarSystems = CollectionViewSource.GetDefaultView(
+                mainViewModel.DiscoveredSolarSystems.Select(
                 solarSystem =>
                 {
                     solarSystem.ResetShownCelestialBodies();
@@ -136,13 +152,14 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
                     return solarSystem;
                 }
             ).Where(solarSystem => solarSystem.ShownCelestialBodies.Any())
-            .ToList();
+            .ToList());
         }
 
         public void FilterSolarSystemsByOutposts()
         {
             // use DiscoveredSolarSystems as base
-            DisplayedSolarSystems = mainViewModel.DiscoveredSolarSystems.Select(
+            DisplayedSolarSystems = CollectionViewSource.GetDefaultView(
+                mainViewModel.DiscoveredSolarSystems.Select(
                 solarSystem =>
                 {
                     solarSystem.ResetShownCelestialBodies();
@@ -164,20 +181,18 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
                     return solarSystem;
                 }
             ).Where(solarSystem => solarSystem.ShownCelestialBodies.Any())
-            .ToList();
+            .ToList());
         }
 
         public void ResetAllFilters()
         {
-            DisplayedSolarSystems = mainViewModel.DiscoveredSolarSystems;
+            DisplayedSolarSystems.Refresh();
+            DisplayedSolarSystems = InitializeSolarSystemCollection();
 
-            foreach (var solarSystem in DisplayedSolarSystems)
+            foreach (var solarSystem in mainViewModel.DiscoveredSolarSystems)
             {
                 solarSystem.ShowAllCelestialBodies();
             }
-
-            // force notify here because the data may not change
-            OnPropertyChanged(nameof(DisplayedSolarSystems));
         }
 
         private void LoadSelectableResources()
@@ -205,12 +220,55 @@ namespace Starfield_Interactive_Smart_Slate.Screens.PlanetaryData
                     LoadSelectableResources();
                     break;
                 case nameof(mainViewModel.DiscoveredSolarSystems):
-                    if (DisplayedSolarSystems == null) // initialize
-                    {
-                        DisplayedSolarSystems = mainViewModel.DiscoveredSolarSystems;
-                    }
+                    DisplayedSolarSystems = InitializeSolarSystemCollection();
                     break;
             }
+        }
+
+        private ICollectionView InitializeSolarSystemCollection()
+        {
+            var collectionView = CollectionViewSource.GetDefaultView(mainViewModel.DiscoveredSolarSystems);
+            collectionView.Filter = item =>
+            {
+                if (item is SolarSystem solarSystem)
+                {
+                    //if (LifeformFilterEnabled || OutpostFilterEnabled)
+                    //{
+                    //    var found = false;
+                    //    solarSystem.CelestialBodies.ForEach(c =>
+                    //    {
+                    //        var surfaceHasOutpost = (OutpostFilterEnabled && c.HasOutpost) ||
+                    //                                (LifeformFilterEnabled && c.HasLifeform);
+                    //        var moonsHaveOutposts = (OutpostFilterEnabled && (c.Moons?.Any(moon => moon.HasOutpost) ?? false)) ||
+                    //                                (LifeformFilterEnabled && (c.Moons?.Any(moon => moon.HasLifeform) ?? false));
+                    //        c.GrayOut = !surfaceHasOutpost;
+
+                    //        // if celestial body (or any of its moons) has an outpost, include it in the list
+                    //        if (surfaceHasOutpost || moonsHaveOutposts)
+                    //        {
+                    //            //c.GrayOut = !surfaceHasOutpost;
+                    //            //solarSystem.ShownCelestialBodies.Add(celestialBody);
+                    //            //return true;
+                    //            found = true;
+                    //        }
+                    //        //return false;
+                    //    });
+                    //    return found;
+                    //}
+
+                    var sn = solarSystem.SystemName.ToLower();
+                    var flt = SolarSystemsFilter.ToLower();
+
+                    return
+                        SolarSystemsFilter.Length > 1
+                            ? sn.Contains(flt) ||
+                              solarSystem.CelestialBodies.Any(b => b.BodyName.ToLower().Contains(flt))
+                            : solarSystem.SystemName.ToLower().StartsWith(flt) ||
+                              solarSystem.CelestialBodies.Any(b => b.BodyName.ToLower().StartsWith(flt));
+                }
+                return false;
+            };
+            return collectionView;
         }
     }
 }

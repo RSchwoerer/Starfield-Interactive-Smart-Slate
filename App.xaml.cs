@@ -165,10 +165,13 @@ namespace Starfield_Interactive_Smart_Slate
             Analytics.EnableManualSessionTracker();
             AppCenter.Start("", typeof(Analytics), typeof(Crashes));
             Analytics.StartSession();
+
+#if !DEBUG
             if (!AppCenter.Configured)
             {
                 MessageBox.Show("Analytics not configured!", "Warning");
             }
+#endif
 
             // load in user settings from DB
             UserSettings.LoadSettings();
