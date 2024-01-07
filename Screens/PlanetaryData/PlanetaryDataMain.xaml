@@ -22,6 +22,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:SystemLevelToColorConverter x:Key="SystemLevelToColorConverter" />
+        <converters:ResourceToColorConverter x:Key="ResourceToColorConverter" />
 
         <Thickness x:Key="MainPanelSpacing">8 0 8 0</Thickness>
 
@@ -460,21 +461,38 @@
                                     x:Name="celestialBodyResourcesList"
                                     ItemsSource="{Binding DisplayedCelestialBody.Resources}"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate d:DataType="models:Resource">
-                                            <Grid Margin="2" Background="{StaticResource MenuDark}">
+                                            <Grid
+                                                Width="50"
+                                                Height="50"
+                                                Margin="2"
+                                                Background="{Binding ShortName, Converter={StaticResource ResourceToColorConverter}}"
+                                                ToolTipService.InitialShowDelay="0">
                                                 <Grid Margin="6">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="auto" />
-                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
-                                                        Foreground="{StaticResource MenuDarkText}"
-                                                        Text="{Binding FullName}" />
-                                                    <controls:RarityControl Grid.Column="1"
-                                                        Margin="{StaticResource PanelItemCentering}"
+                                                    <Grid.ToolTip>
+                                                        <TextBlock Text="{Binding FullName}" />
+                                                    </Grid.ToolTip>
+
+                                                    <controls:RarityControl Grid.Row="0"
+                                                        HorizontalAlignment="Right"
                                                         Rarity="{Binding Rarity}" />
+                                                    <TextBlock Grid.Row="1"
+                                                        Foreground="{StaticResource MenuDarkText}"
+                                                        Text="{Binding ShortName}" />
+
                                                 </Grid>
                                             </Grid>
                                         </DataTemplate>
